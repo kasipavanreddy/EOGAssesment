@@ -1,51 +1,49 @@
-import React, { useState, useEffect } from "react";
-import Select, { OptionTypeBase, OptionsType, ActionMeta } from "react-select";
-import { useQuery } from "urql";
-import { useDispatch } from "react-redux";
-import { actions } from "../Features/Metrics/reducer";
+import React, { useState, useEffect } from "react"
+import Select, { OptionTypeBase, OptionsType, ActionMeta } from "react-select"
+import { useQuery } from "urql"
+import { useDispatch } from "react-redux"
+import { actions } from "../Features/Metrics/reducer"
 
 const query = `
     query {
         getMetrics
     }
-`;
+`
 
 interface Option extends OptionTypeBase {
-  label: string;
-  value: string;
+  label: string
+  value: string
 }
 
 const MetricSelector: React.FC = () => {
   const [result] = useQuery({
     query,
-  });
-  const dispatch = useDispatch();
-  const [options, setOptions] = useState<OptionsType<Option>>([]);
-  const { data, error } = result;
+  })
+  const dispatch = useDispatch()
+  const [options, setOptions] = useState<OptionsType<Option>>([])
+  const { data, error } = result
 
   const onChange = (selected: any, action: ActionMeta<Option>) => {
-    const newMetric = action.option?.value;
-    const selectedItems = selected
-      ? selected.map((item: Option) => item.value)
-      : [];
+    const newMetric = action.option?.value
+    const selectedItems = selected ? selected.map((item: Option) => item.value) : []
     dispatch(
       actions.metricsSelected({
         selected: selectedItems,
         newMetric: newMetric || "",
       })
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     if (error) {
-      return;
+      return
     }
-    if (!data) return;
-    const { getMetrics } = data;
+    if (!data) return
+    const { getMetrics } = data
     setOptions(
       getMetrics.map((option: string) => ({ label: option, value: option }))
-    );
-  }, [dispatch, data, error]);
+    )
+  }, [dispatch, data, error])
 
   return (
     <Select
@@ -55,7 +53,7 @@ const MetricSelector: React.FC = () => {
       closeMenuOnSelect={false}
       onChange={onChange}
     />
-  );
-};
+  )
+}
 
-export default MetricSelector;
+export default MetricSelector

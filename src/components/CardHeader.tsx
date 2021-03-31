@@ -1,5 +1,5 @@
-import CardHeader from "@material-ui/core/CardHeader";
-import { withStyles, Theme } from "@material-ui/core/styles";
+import CardHeader from "@material-ui/core/CardHeader"
+import { withStyles, Theme } from "@material-ui/core/styles"
 
 const styles = (theme: Theme) => ({
   root: {
@@ -8,5 +8,5 @@ const styles = (theme: Theme) => ({
   title: {
     color: "white",
   },
-});
-export default withStyles(styles)(CardHeader);
+})
+export default withStyles(styles)(CardHeader)

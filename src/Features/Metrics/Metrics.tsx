@@ -1,22 +1,17 @@
-import React from "react";
-import {
-  Provider,
-  createClient,
-  defaultExchanges,
-  subscriptionExchange,
-} from "urql";
-import { SubscriptionClient } from "subscriptions-transport-ws";
-import { Grid, makeStyles, Theme } from "@material-ui/core";
-import SelectMetric from "../../components/SelectMetric";
-import Graphs from "../../components/Graphs";
-import MetricCardsSection from "../../components/MetricCardsSection";
+import React from "react"
+import { Provider, createClient, defaultExchanges, subscriptionExchange } from "urql"
+import { SubscriptionClient } from "subscriptions-transport-ws"
+import { Grid, makeStyles, Theme } from "@material-ui/core"
+import SelectMetric from "../../components/SelectMetric"
+import Graphs from "../../components/Graphs"
+import MetricCardsSection from "../../components/MetricCardsSection"
 
 const subscriptionClient = new SubscriptionClient(
   `ws://react.eogresources.com/graphql`,
   {
     reconnect: true,
   }
-);
+)
 
 export const client = createClient({
   url: `https://react.eogresources.com/graphql`,
@@ -26,24 +21,24 @@ export const client = createClient({
       forwardSubscription: (operation) => subscriptionClient.request(operation),
     }),
   ],
-});
+})
 
 export default () => {
   return (
     <Provider value={client}>
       <Metrics />
     </Provider>
-  );
-};
+  )
+}
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     padding: theme.spacing(2),
   },
-}));
+}))
 
 const Metrics = () => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <Grid container item xs={12} spacing={4} className={classes.container}>
       <Grid item container spacing={2} direction="row-reverse">
@@ -60,5 +55,5 @@ const Metrics = () => {
         <Graphs />
       </Grid>
     </Grid>
-  );
-};
+  )
+}

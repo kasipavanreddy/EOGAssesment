@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   LineChart,
   Line,
@@ -6,7 +6,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-} from "recharts";
+} from "recharts"
 import {
   green,
   indigo,
@@ -14,11 +14,11 @@ import {
   deepPurple,
   lightGreen,
   brown,
-} from "@material-ui/core/colors";
-import { useSelector } from "react-redux";
-import { Grid, makeStyles } from "@material-ui/core";
-import { getMetrics, getSelectedItems } from "../Features/Metrics/selectors";
-import { getAxisID, unitAdder } from "../utils";
+} from "@material-ui/core/colors"
+import { useSelector } from "react-redux"
+import { Grid, makeStyles } from "@material-ui/core"
+import { getMetrics, getSelectedItems } from "../Features/Metrics/selectors"
+import { getAxisID, unitAdder } from "../utils"
 
 const COLORS = [
   brown[500],
@@ -27,7 +27,7 @@ const COLORS = [
   lightGreen[500],
   indigo[400],
   green[500],
-];
+]
 
 const useStyles = makeStyles((theme) => ({
   graphContainer: {
@@ -38,26 +38,26 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     background: "white",
   },
-}));
+}))
 
 interface IUnits {
   [key: string]: {
-    enabled: boolean;
-    value: string;
-    dx: number;
-    dy: number;
-    angle: number;
-    yAxisId: number;
-    fontSize?: number;
-    tickFormatter?: (value: number) => string;
-  };
+    enabled: boolean
+    value: string
+    dx: number
+    dy: number
+    angle: number
+    yAxisId: number
+    fontSize?: number
+    tickFormatter?: (value: number) => string
+  }
 }
 
 const Graphs: React.FC = () => {
-  const selectedItems = useSelector(getSelectedItems);
-  const metrics = useSelector(getMetrics);
-  const classes = useStyles();
-  const data = Object.keys(metrics).map((key) => metrics[key]);
+  const selectedItems = useSelector(getSelectedItems)
+  const metrics = useSelector(getMetrics)
+  const classes = useStyles()
+  const data = Object.keys(metrics).map((key) => metrics[key])
 
   const units: IUnits = {
     percentage: {
@@ -87,7 +87,7 @@ const Graphs: React.FC = () => {
       fontSize: 12,
       yAxisId: 2,
     },
-  };
+  }
 
   return (
     <Grid container className={classes.graphContainer}>
@@ -103,11 +103,11 @@ const Graphs: React.FC = () => {
                 dot
                 activeDot
               />
-            );
+            )
           })}
           {selectedItems.length > 0 && <XAxis dataKey="at" interval={150} />}
           {Object.keys(units).map((key) => {
-            const { enabled, yAxisId, tickFormatter, ...rest } = units[key];
+            const { enabled, yAxisId, tickFormatter, ...rest } = units[key]
             return (
               enabled && (
                 <YAxis
@@ -122,13 +122,13 @@ const Graphs: React.FC = () => {
                   tickFormatter={tickFormatter}
                 />
               )
-            );
+            )
           })}
           <Tooltip />
         </LineChart>
       </ResponsiveContainer>
     </Grid>
-  );
-};
+  )
+}
 
-export default Graphs;
+export default Graphs
